@@ -17,6 +17,11 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  build: {
+    optimization: {
+      minimize: true,
+    }
+  },
 
   css: [
     '@/assets/css/main.css',

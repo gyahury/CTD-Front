@@ -34,11 +34,11 @@
     </div>
     <v-fab-transition>
       <v-btn v-if="!this.$auth.loggedIn" color="red" to="/login" fab dark small fixed
-        :style="{ right: 'calc(50% - 200px)', bottom: '150px' }">
+        :style="{ right: 'calc(50% - 200px)', bottom: '150px' }" class="hide-on-mobile">
         <v-icon>mdi-account-key</v-icon>
       </v-btn>
       <v-btn v-if="this.$auth.loggedIn" color="green" fab dark small fixed
-        :style="{ right: 'calc(50% - 200px)', bottom: '150px' }" to="/me">
+        :style="{ right: 'calc(50% - 200px)', bottom: '150px' }" to="/me" class="hide-on-mobile">
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-fab-transition>
@@ -128,5 +128,28 @@ p {
 }
 .txt_area{
   width : 260px
+}
+
+
+@media (max-width: 768px) {
+  .content_wrapper {
+    padding-left: 2vh;
+    padding-right: 2vh;
+    width: 100%;
+    min-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .input_wrapper {
+    text-align: center;
+    max-width: 100%;
+  }
+  
+  .txt_area {
+    max-width: 100%;
+  }
+  .hide-on-mobile {
+    display: none;
+  }
 }
 </style>
