@@ -1,4 +1,4 @@
-# CTD Frontend
+# CTD Frontend(1.0 first release)
 
 ## Build Setup
 
