@@ -12,21 +12,20 @@
 <script>
 import axios from 'axios';
 import { debounce } from "lodash";
-
 export default {
     data: () => ({
         todo: '',
         isDone: 0,
         iconIndex: 0,
         icons: [
-            'mdi-emoticon',
-            'mdi-emoticon-cool',
-            'mdi-emoticon-dead',
-            'mdi-emoticon-excited',
-            'mdi-emoticon-happy',
-            'mdi-emoticon-neutral',
-            'mdi-emoticon-sad',
-            'mdi-emoticon-tongue',
+            'mdi-emoticon-outline',
+            'mdi-emoticon-cool-outline',
+            'mdi-emoticon-dead-outline',
+            'mdi-emoticon-excited-outline',
+            'mdi-emoticon-happy-outline',
+            'mdi-emoticon-neutral-outline',
+            'mdi-emoticon-sad-outline',
+            'mdi-emoticon-tongue-outline',
         ],
     }),
 
@@ -92,4 +91,3 @@ export default {
     },
 }
 </script>
-<style scoped></style>

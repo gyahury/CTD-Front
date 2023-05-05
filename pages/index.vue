@@ -11,7 +11,7 @@
             <v-divider v-if="i !== 0" :key="`${i}-divider`" class="custom-divider"></v-divider>
             <v-list-item>
               <v-list-item-action>
-                <v-checkbox v-model="todoObj.status" :color="todoObj.status == 1 && 'grey' || 'primary'"
+                <v-checkbox class="mt-5" v-model="todoObj.status" :color="todoObj.status == 1 && 'grey' || 'primary'"
                   @change="updateTodo(todoObj)">
                   <template v-slot:label>
                     <div :style="{ textDecoration: todoObj.status == 1 ? 'line-through' : 'none' }" class="ms-4 txt_area"
@@ -22,13 +22,13 @@
               </v-list-item-action>
               <v-spacer></v-spacer>
               <v-scroll-x-transition>
-                <v-icon v-if="todoObj.status == 1" color="success">
+                <v-icon v-if="todoObj.status == 1" color="success" style="width:43px">
                   mdi-check
                 </v-icon>
               </v-scroll-x-transition>
+              <v-list-item-icon style="margin:auto;" ><v-icon>{{ icon(todoObj.feel) }}</v-icon></v-list-item-icon>
             </v-list-item>
           </div>
-
         </v-card>
       </div>
     </div>
@@ -68,12 +68,15 @@ export default {
       return { todos: [] };
     }
   },
+
   components: {
     TodoInput,
   },
+
   data: () => ({
     todos: [],
   }),
+
   methods: {
     async updateTodo(todoObj) {
       try {
@@ -85,7 +88,6 @@ export default {
             Authorization: `${this.$auth.getToken('local')}`,
           },
         });
-
         if (response.status === 200) {
           this.$root.$emit('showSnackbar', 'todo 업데이트 되었습니다.', 'green', 5000);
         } else {
@@ -95,6 +97,19 @@ export default {
         console.error('API 호출 중 오류 발생:', error);
         this.$root.$emit('showSnackbar', 'todo 업데이트에 실패했습니다.', 'red', 5000);
       }
+    },
+    icon(feel) {
+      const iconNames = [
+        'mdi-emoticon-outline',
+        'mdi-emoticon-cool-outline',
+        'mdi-emoticon-dead-outline',
+        'mdi-emoticon-excited-outline',
+        'mdi-emoticon-happy-outline',
+        'mdi-emoticon-neutral-outline',
+        'mdi-emoticon-sad-outline',
+        'mdi-emoticon-tongue-outline',
+      ];
+      return iconNames[feel];
     },
   },
 };
@@ -126,8 +141,9 @@ p {
 .v-list-item {
   word-break: break-all;
 }
-.txt_area{
-  width : 260px
+
+.txt_area {
+  width: 234px
 }
 
 
@@ -139,15 +155,16 @@ p {
     min-height: 80vh;
     overflow-y: auto;
   }
-  
+
   .input_wrapper {
     text-align: center;
     max-width: 100%;
   }
-  
+
   .txt_area {
     max-width: 100%;
   }
+
   .hide-on-mobile {
     display: none;
   }
