@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
 
 export default {
   head: {
@@ -46,7 +47,10 @@ export default {
   ],
   axios: {
     // API URL 구성
-    baseURL: 'http://localhost:3001',
+    baseURL: process.env.API_URL,
+  },
+  env: {
+    apiUrl: process.env.API_URL,
   },
   // 인증 전략
   auth: {
@@ -59,7 +63,7 @@ export default {
         },
         tokenRequired: true,
         tokenType: 'Bearer',
-        autoFetchUser: true, // 모든 페이지 user 호출
+        autoFetchUser: false, // 모든 페이지 user 호출
         globalToken: true,
       },
     },
