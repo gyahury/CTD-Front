@@ -10,7 +10,6 @@
 </template>
   
 <script>
-import axios from 'axios';
 import { debounce } from "lodash";
 export default {
     data: () => ({
@@ -51,7 +50,7 @@ export default {
 
             try {
                 if (this.$root.$auth.loggedIn) {
-                    const response = await axios.post('http://localhost:3001/todos', {
+                    const response = await this.$axios.$post('/todos', {
                         content: this.todo,
                         feel: this.iconIndex,
                     }, {
@@ -59,13 +58,12 @@ export default {
                             Authorization: `${this.$root.$auth.getToken('local')}`,
                         },
                     });
-
-                    this.$parent.$data.todos.unshift({
+                    this.$emit('todoAdded', {
+                        id : response.todoId,
                         content: this.todo,
                         feel: this.iconIndex,
                         status: this.isDone,
                     });
-
                     this.resetIcon();
                     this.clearTodo();
                     this.$refs.todoInput.focus();

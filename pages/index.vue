@@ -3,7 +3,7 @@
     <div class="content_wrapper">
       <div v-if="todos.length === 0">
         <p v-if="!this.$auth.loggedIn">로그인이 필요합니다.</p>
-        <p v-else>{{this.$auth.user.nickname}}님 ! <br/>하단의 To Do를 입력해보세요.</p>
+        <p v-else>{{ this.$auth.user.nickname }}님 ! <br />하단의 To Do를 입력해보세요.</p>
       </div>
       <div v-else>
         <v-card v-if="todos.length > 0">
@@ -26,7 +26,7 @@
                   mdi-check
                 </v-icon>
               </v-scroll-x-transition>
-              <v-list-item-icon style="margin:auto;" ><v-icon>{{ icon(todoObj.feel) }}</v-icon></v-list-item-icon>
+              <v-list-item-icon style="margin:auto;"><v-icon>{{ icon(todoObj.feel) }}</v-icon></v-list-item-icon>
             </v-list-item>
           </div>
         </v-card>
@@ -43,24 +43,23 @@
       </v-btn>
     </v-fab-transition>
     <div class="input_wrapper">
-      <TodoInput ref="TodoInput" />
+      <TodoInput ref="TodoInput" v-on:todoAdded="addTodo" />
     </div>
   </div>
 </template>
 
 <script>
 import TodoInput from '~/components/TodoInput.vue';
-import axios from 'axios';
 export default {
   async asyncData({ app }) {
     try {
       if (app.$auth.loggedIn) {
-        const response = await axios.get('http://localhost:3001/todos', {
+        const response = await app.$axios.$get('/todos', {
           headers: {
             Authorization: `${app.$auth.getToken('local')}`,
           },
         });
-        return { todos: response.data.data.todos, userId: response.data.data.userId };
+        return { todos: response.data.todos, userId: response.data.userId };
       }
       return { todos: [] };
     } catch (error) {
@@ -80,15 +79,16 @@ export default {
   methods: {
     async updateTodo(todoObj) {
       try {
-        const statusValue = todoObj.status ? 1 : 0; //status 숫자로 치환    
-        const response = await axios.patch(`http://localhost:3001/todos/${todoObj.id}`, {
+        const statusValue = todoObj.status ? 1 : 0; //status 숫자로 치환   
+        const todoId = parseInt(todoObj.id); 
+        const response = await this.$axios.$patch(`/todos/${todoId}`, {
           status: statusValue,
         }, {
           headers: {
             Authorization: `${this.$auth.getToken('local')}`,
           },
         });
-        if (response.status === 200) {
+        if (response.ok === true) {
           this.$root.$emit('showSnackbar', 'todo 업데이트 되었습니다.', 'green', 5000);
         } else {
           this.$root.$emit('showSnackbar', 'todo 업데이트에 실패했습니다.', 'red', 5000);
@@ -110,6 +110,9 @@ export default {
         'mdi-emoticon-tongue-outline',
       ];
       return iconNames[feel];
+    },
+    addTodo(todo) {
+      this.todos.unshift(todo);
     },
   },
 };
