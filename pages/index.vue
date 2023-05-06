@@ -3,7 +3,7 @@
     <div class="content_wrapper">
       <div v-if="todos.length === 0">
         <p v-if="!this.$auth.loggedIn">로그인이 필요합니다.</p>
-        <p v-else>하단의 To Do를 입력해보세요.</p>
+        <p v-else>{{this.$auth.user.nickname}}님 ! <br/>하단의 To Do를 입력해보세요.</p>
       </div>
       <div v-else>
         <v-card v-if="todos.length > 0">

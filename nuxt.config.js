@@ -59,7 +59,7 @@ export default {
         },
         tokenRequired: true,
         tokenType: 'Bearer',
-        autoFetchUser: false, // 모든 페이지 user 호출
+        autoFetchUser: true, // 모든 페이지 user 호출
         globalToken: true,
       },
     },
